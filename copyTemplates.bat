@@ -1,0 +1,1 @@
+robocopy "./src/main/resources/templates" "./target/classes/templates"

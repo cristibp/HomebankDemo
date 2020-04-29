@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<h1>Homebank</h1>
+Welcome <span th:text="${user}"> </span>,
+<br/>
+<a th:href="@{add-bank-account}">Add bank account</a>
+<a th:href="@{list-bank-accounts}">Show the bank accounts</a>
+</body>
+</html>
