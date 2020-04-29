@@ -2,6 +2,7 @@ package com.demo.service.impl;
 
 import com.demo.dao.BankAccountRepository;
 import com.demo.dao.UserRepository;
+import com.demo.exception.DuplicateAccountException;
 import com.demo.exception.InvalidIBANException;
 import com.demo.exception.NotWorkingDayException;
 import com.demo.model.BankAccount;
@@ -36,9 +37,12 @@ public class BankAccountServiceImpl implements BankAccountService {
      * @see BankAccountService#save(BankAccount)
      */
     @Override
-    public BankAccount save(BankAccount bankAccount) throws NotWorkingDayException, InvalidIBANException {
+    public BankAccount save(BankAccount bankAccount) throws NotWorkingDayException, InvalidIBANException, DuplicateAccountException {
         if (!openTableService.isWorkingDay(LocalDateTime.now())) {
             throw new NotWorkingDayException("The action has to be performed between working hours");
+        }
+        if(!bankAccountRepository.findBankAccountsByUser(getLoggedUser()).isEmpty()) {
+            throw new DuplicateAccountException("Only one account per user is accepted");
         }
         IBANValidator ibanValidator = new IBANValidator(15);
         String iban = bankAccount.getIban();

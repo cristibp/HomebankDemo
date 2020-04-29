@@ -1,5 +1,6 @@
 package com.demo.service;
 
+import com.demo.exception.DuplicateAccountException;
 import com.demo.exception.InvalidIBANException;
 import com.demo.exception.NotWorkingDayException;
 import com.demo.model.BankAccount;
@@ -13,7 +14,7 @@ public interface BankAccountService {
      * @param bankAccount
      * @return
      */
-    BankAccount save(BankAccount bankAccount) throws NotWorkingDayException, InvalidIBANException;
+    BankAccount save(BankAccount bankAccount) throws NotWorkingDayException, InvalidIBANException, DuplicateAccountException;
 
     /**
      * Retrieves the list of all the bank accounts associated

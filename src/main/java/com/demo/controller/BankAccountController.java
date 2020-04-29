@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.dto.BankAccountDTO;
+import com.demo.exception.DuplicateAccountException;
 import com.demo.exception.InvalidIBANException;
 import com.demo.exception.NotWorkingDayException;
 import com.demo.model.BankAccount;
@@ -62,8 +63,8 @@ public class BankAccountController {
         BankAccount bankAccount = modelMapper.map(bankAccountDTO, BankAccount.class);
         try {
             bankAccountService.save(bankAccount);
-        } catch (NotWorkingDayException e) {
-            errors.addError(new ObjectError("not_working_day", e.getMessage()));
+        } catch (NotWorkingDayException | DuplicateAccountException e) {
+            errors.addError(new ObjectError("global_error", e.getMessage()));
             return "add-bank-account";
         } catch (InvalidIBANException e) {
             errors.addError(new FieldError("bankAccount","iban", e.getMessage()));
